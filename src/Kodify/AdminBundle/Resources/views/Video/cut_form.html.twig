@@ -1,0 +1,65 @@
+{% extends 'KodifyAdminBundle::layout.html.twig' %}
+
+{% block head_script %}
+    {{ parent() }}
+    {%- javascripts
+        '@KodifyAdminBundle/Resources/public/js/jwplayer.js'
+        '@KodifyAdminBundle/Resources/public/js/jwplayer.html5.js'
+        '@KodifyAdminBundle/Resources/public/js/views/cut_form.js'
+        '@KodifyAdminBundle/Resources/public/js/jquery.tagsinput.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock head_script %}
+
+{% block bodyclass %}class="cut-form"{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="column right-column">
+            {% include "KodifyAdminBundle:Video:right_column.html.twig" %}
+        </div>
+        <div class="column fixed-left-column">
+            <h4>
+                <a href="https://www.google.com/search?hl=en&gl=US&pws=0&q=%22{{ title|url_encode() }}%22" target="_blank">
+                    {{ title }}
+                </a>
+            </h4>
+
+            <div id="cut_video_header_buttons"  class="header-boton-bar">
+                <p>
+                    <button type="button"  class="btn btn-danger" id="cancel_cutting" data-dest="clip[]">
+                        <i class="icon-white icon-ban-circle"></i>
+                        Cancel work
+                    </button>
+                    <button type="button"  class="btn btn-danger" id="mark_as_unsuitable" data-dest="clip[]">
+                        <i class="icon-white icon-exclamation-sign"></i>
+                        Mark video as unsuitable
+                    </button>
+                </p>
+         </div>
+
+            {% include "KodifyAdminBundle:Video:left_column.html.twig" %}
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        jwplayer("videoPlayer").setup({
+            file: "{{ video_url }}",
+            'width': '464',
+            'height': '348',
+            'autostart': 'true'
+        });
+        var userName = '{{ userName }}';
+        var autocompletePornstarsUrl = '{{ autocomplete_pornstars }}';
+        var autocompleteTagsUrl = '{{ autocomplete_tags }}';
+        var cancelUrl = '{{ cancel_url }}';
+        var validateTagsUrl = '{{ validate_tags_url }}';
+        var validatePornstarsUrl = '{{ validate_pornstars_url }}';
+        var unsuitableUrl = '{{ unsuitable_url }}';
+        var videoDuration = '{{ duration }}';
+        var pornstarPlaceholder = '/bundles/kodifyadmin/img/pornstar-placeholder.jpeg';
+    </script>
+{% endblock content %}
+

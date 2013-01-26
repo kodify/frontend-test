@@ -1,0 +1,29 @@
+{% set filesData = get_duplicated_video_info(row[index_key]) %}
+
+{% if filesData %}
+    <p><strong>name:</strong> {{ filesData.name }}</p>
+    <p><strong>duration:</strong> {% include 'KodifyAdminBundle:Video/Crud:cell_duration_renderer.html.twig' with {'value': filesData.duration}  %}</p>
+    <p><strong>original file size:</strong> {{ filesData.oldSize }}</p>
+    <p><strong>new file size:</strong> {{ filesData.newSize }}</p>
+{% else %}
+    <p>Sorry, we could not retrieve data of the videos</p>
+{% endif %}
+<p>Are you sure you want to download this one also?</p>
+<p>
+    <a
+        id="{{ key }}_{{ row[index_key] }}"
+        class="btn btn-success"
+        href="{{ path(action_row.url, {'id' : row[index_key],'action': 'download'}) }}"
+        >
+    Yes
+    </a>
+
+    <a
+        id="{{ key }}_{{ row[index_key] }}"
+        class="btn btn-danger"
+        href="{{ path(action_row.url, {'id' : row[index_key],'action': 'discard'}) }}"
+        >
+    No, discard
+    </a>
+</p>
+

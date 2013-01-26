@@ -1,0 +1,15 @@
+{% extends 'KodifyAdminBundle::layout.html.twig' %}
+
+{% block content %}
+    <div id="login-div"  class="hero-unit">
+        <form class="form-signin" action="{{ path('login_check') }}" method="POST">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input type="text" class="input-block-level" placeholder="Username" name="_username">
+            <input type="password" class="input-block-level" placeholder="Password" name="_password">
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+          </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,105 @@
+<div id="video-thumbnails">
+    {% for thumbs in thumbnail_list %}
+        <img src="{{ s3_bucket_path }}{{ thumbs.url }}" data-time="{{ thumbs.time }}">
+    {% endfor %}
+</div>
+
+
+<div id="thumbSelectorModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal-body">
+    </div>
+</div>
+
+<style>
+    #thumbSelectorModel .modal-body img {
+        border:1px solid #fff;
+        cursor: pointer;
+        width: 200px;
+    }
+</style>
+
+<script>
+    var thumbnails_path = 'https://s3.amazonaws.com//katts3-dev/b9adec830bfa3409e2ab7c3b760855c0_';
+    var videoDuration = 10000;
+    var start = false;
+    var end = false;
+    var clipForm = null;
+
+    $(document).ready(function () {
+
+
+        $(".begin_capture_process").live("click", function(){
+            clipForm = $(this).parentsUntil(".clip_form");
+            start = false;
+            end = false;
+        });
+
+        $('#video-thumbnails img').on("click", function () {
+            var thumbTime = $(this).data('time');
+            var init = thumbTime;
+            var finish = thumbTime + 30;
+
+            if (init < 0) {
+                init = 0;
+            }
+            if (finish > videoDuration) {
+                finish = videoDuration;
+            }
+
+            $('#thumbSelectorModel .modal-body').empty();
+            for (i = init; i<finish; i++) {
+                $('#thumbSelectorModel .modal-body').append('<img src="'+thumbnails_path+i+'.jpg" data-time="' + i + '" />')
+                if (i % 4 == 0) {
+                    $('#thumbSelectorModel .modal-body').append('<br />');
+                }
+            }
+
+            $('#thumbSelectorModel').modal('show').css({width: 'auto'});
+        });
+
+        $("#thumbSelectorModel img").live("click", function(){
+            time = secondsToTime($(this).data('time'));
+
+            if (clipForm != null) {
+                if (!start) {
+                    start = true;
+                    $(clipForm).find('input[name="clip[start][]"]').val(time);
+                    $('#thumbSelectorModel').modal('hide')
+                } else if (!end) {
+                    end = true;
+                    $(clipForm).find('input[name="clip[end][]"]').val(time);
+                    $('#thumbSelectorModel').modal('hide')
+                }
+            }
+        });
+
+        $("body").on("keyup", function (e) {
+            if (e.keyCode == $.ui.keyCode.ESCAPE) {
+                if (!end) {
+                    $(clipForm).find('input[name="clip[start][]"]').val("");
+                    start = false;
+                    clipForm = null;
+                }
+            }
+        });
+
+        $(".start_button").live("click", function(){
+            time = secondsToTime($(this).val());
+            jwplayer('videoPlayer').seek(time);
+        });
+
+        $(".end_button").live("click", function(){
+            time = secondsToTime($(this).val());
+            jwplayer('videoPlayer').seek(time - 5);
+        });
+
+
+
+
+        /*
+         $('#video-thumbnails img').on("click", function () {
+         jwplayer('videoPlayer').seek($(this).data('time'));
+         });
+         */
+    });
+</script>

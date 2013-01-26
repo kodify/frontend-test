@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        {% block head_style %}
+            {% stylesheets
+                output='css/*.css' filter='cssrewrite' debug=false
+                'bundles/kodifyadmin/css/katt.css'
+                'bundles/kodifysimplecrud/css/bootstrap.min.css'
+                'bundles/kodifysimplecrud/css/crud.css'
+                'bundles/kodifyadmin/css/ui-lightness/jquery-ui-1.9.2.custom.min.css'
+                'bundles/kodifyadmin/css/jquery.tagsinput.css'
+            %}
+		        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+		    {% endstylesheets %}
+		{% endblock head_style %}
+        {% block head_script %}
+            {%- javascripts
+                '@KodifySimpleCrudBundle/Resources/public/js/jquery-1.8.3.min.js'
+                '@KodifySimpleCrudBundle/Resources/public/js/bootstrap.min.js'
+                '@KodifyAdminBundle/Resources/public/js/jquery-ui-1.9.2.custom.min.js'
+                '@KodifyAdminBundle/Resources/public/js/bootbox.min.js'
+                '@KodifyAdminBundle/Resources/public/js/jquery.tagsinput.js'
+                '@KodifyAdminBundle/Resources/public/js/views/common.js'
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+        {% block tracking_script %}
+            <!-- start Mixpanel -->
+            <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
+                    typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,
+                e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+                mixpanel.init("{{ mixpanel_token }}");
+                mixpanel.set_config({track_pageview: false});
+            </script>
+            <!-- end Mixpanel -->
+        {% endblock %}
+
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+    </head>
+    <body {% block bodyclass %} {% endblock %}>
+        {% block body %}
+            {% if is_granted('ROLE_USER') %}
+                <div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container-fluid">
+                            <a class="brand" href="#">Katt</a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav pull-right">
+
+                                    {% include "KodifyAdminBundle::menu_alerts.html.twig" %}
+
+                                    <li><a href="#" class="navbar-link">Logged in as {{ app.user.username }}</a></li>
+                                    <li><a href="{{ path('logout') }}">Logout</a></li>
+                                </ul>
+                                <ul class="nav">
+                                    <li id="main_li">
+                                        <a href="{{ path('main_dashboard') }}">Home</a>
+                                    </li>
+                                    <li id="video_li">
+                                        <a href="{{ path('get_video') }}">Videos</a>
+                                    </li>
+                                    <li id="clip_li">
+                                        <a href="{{ path('get_clip') }}">Clips</a>
+                                    </li>
+                                    <li id="pornstar_li">
+                                        <a href="{{ path('get_pornstar') }}">Pornstars</a>
+                                    </li>
+                                    <li id="tag_li">
+                                        <a href="{{ path('get_tag') }}">Tags</a>
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="{% block containerclass %}container{% endblock %}">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        {% endblock body %}
+        {% block javascripts %}{% endblock %}
+        {% block foot_script %}{% endblock foot_script %}
+    </body>
+</html>

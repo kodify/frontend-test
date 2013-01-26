@@ -1,0 +1,17 @@
+{% extends 'KodifyAdminBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1>Main page</h1>
+{% endblock content %}
+
+{% block tracking_script %}
+    {{ parent() }}
+    <script>
+        mixpanel.identify('{{ userName }}');
+        mixpanel.name_tag('{{ userName }}');
+        mixpanel.people.set({
+            "$name": "{{ userName }}",
+            "$last_login": new Date()
+        });
+    </script>
+{%  endblock tracking_script %}

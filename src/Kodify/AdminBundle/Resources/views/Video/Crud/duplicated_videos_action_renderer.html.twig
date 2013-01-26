@@ -1,0 +1,17 @@
+{% if 9 == row.status %}{# maybe duplicated #}
+    <button
+        id="{{ key }}_{{ row[index_key] }}"
+        class="btn"
+        type="button"
+        data-content='{% include 'KodifyAdminBundle:Video/Crud:duplicated_videos_popover_content.html.twig' %}'
+        data-original-title="Wait! I've found a similar file"
+        >
+        {{ action_row.label }} <i class="icon-{{ action_row.ico }}"></i>
+    </button>
+    <script type="text/javascript">
+        $('#{{ key }}_{{ row[index_key] }}').popover({'html':true,'placement':'left','trigger':'click'});
+    </script>
+
+{% elseif row.status  in [4,5] %} {# ready, blocked #}
+    {% include 'KodifySimpleCrudBundle:CRUD:list_action.html.twig' %}
+{% endif %}

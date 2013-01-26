@@ -1,0 +1,12 @@
+{%  set chars_limit = 87 %}
+{% set truncated_value = value %}
+{% if chars_limit < value|length %}
+    {% set truncated_value = value|truncate(chars_limit) ~ '...' %}
+{% endif %}
+
+<a href="https://www.google.com/search?hl=en&gl=US&pws=0&q=%22{{ value|url_encode() }}%22"
+   target="_blank"
+   title="{{ value }}"
+   >
+    {{ truncated_value }}
+</a>

@@ -1,0 +1,28 @@
+<li>
+    {% set put_io_alert = get_putio_alert() %}
+    {% if put_io_alert < 10 %}
+        {% set putio_class = "important"  %}
+    {% elseif put_io_alert < 25 %}
+        {% set putio_class = "warning"  %}
+    {% else %}
+        {% set putio_class = "success"  %}
+    {% endif %}
+    <a href="https://put.io/your-files/{{ putio_root_folder_id }}" target="_blank">
+        Put.io:
+        <span id="alert_putio" class="badge badge-{{ putio_class }}">{{ put_io_alert }}</span>
+    </a>
+</li>
+<li>
+    {% set ready_alert = get_ready_alert() %}
+    {% if ready_alert < 10 %}
+        {% set ready_class = "important"  %}
+    {% elseif ready_alert < 25 %}
+        {% set ready_class = "warning"  %}
+    {% else %}
+        {% set ready_class = "success"  %}
+    {% endif %}
+    <a href="{{ path('get_video') }}?filter[status]=4">
+        Ready to cut:
+        <span id="alert_video" class="badge badge-{{ ready_class }}">{{ ready_alert }}</span>
+    </a>
+</li>

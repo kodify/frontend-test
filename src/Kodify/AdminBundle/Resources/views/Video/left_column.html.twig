@@ -1,0 +1,50 @@
+<div id="videoPlayer">Loading the player...</div>
+
+<form method="post" id="cuttingClipForm" action="{{ post_url }}">
+    <input type="hidden" name="video_id" value="{{ video_id }}">
+    <div id="clipForm" data-position="0">
+        <div class="clip_form well">
+            <img class="pornstar-image" alt="Pornstar thumbnail" src="">
+            <div id="time-fields" class="btn-toolbar">
+                <span>
+                    <button type="button" value="" class="btn btn-primary start_button" class="btn btn-primary">Start</button>
+                </span>
+                <span>
+                    <input class="input-mini" name="clip[start][]"  type="text">
+                </span>
+                <span>
+                    <button type="button"  class="btn btn-primary end_button">End</button>
+                </span>
+                <span>
+                    <input class="input-mini " name="clip[end][]" type="text">
+                </span>
+                <span>
+                    <button type="button"  class="btn btn-primary select_entire_video_button" data-dest="clip">All</button>
+                    <button type="button"  class="btn btn-primary begin_capture_process" data-dest="clip">TIME</button>
+                </span>
+            </div>
+            <div>
+                <div class="form">
+                    <p>
+                        <input id="testing_id"  class="input-xxlarge" name="clip[title][]" type="text" placeholder="Clip title">
+                    </p>
+                    <p>
+                        <input class="input-xxlarge pornstar_input" name="clip[pornstars][]" type="text"  placeholder="Pornstars">
+                        <span class="pornstars-error-message error"></span>
+
+                    </p>
+                    <p>
+                        <input class="input-xxlarge tags_input" name="clip[tags][]" type="text" placeholder="Tags">
+                        <span class="tags-error-message error"></span>
+                    </p>
+                </div>
+                <div class="btn-toolbar">
+                    <button type="button" class="btn btn-primary add_new_clip">New Clip</button>
+                    <button type="button"  class="btn btn-primary" id="submitButton">Finish & next >></button>
+                    <button type="button" class="btn btn-danger remove_current_clip">Remove</button>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</form>

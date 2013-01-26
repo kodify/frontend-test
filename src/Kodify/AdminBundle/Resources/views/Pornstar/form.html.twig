@@ -1,0 +1,24 @@
+{% extends 'KodifySimpleCrudBundle:CRUD:form.html.twig' %}
+
+{% block head_script %}
+    {{ parent() }}
+    {%- javascripts
+        '@KodifyAdminBundle/Resources/public/js/jquery-ui-1.9.2.custom.min.js'
+        '@KodifyAdminBundle/Resources/public/js/jquery.tagsinput.js'
+        '@KodifyAdminBundle/Resources/public/js/views/common.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#pornstar_alias').tagsInput({
+                'defaultText'       : ''
+            });
+        });
+    </script>
+{% endblock content %}
+

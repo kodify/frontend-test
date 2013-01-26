@@ -1,0 +1,117 @@
+{% extends 'KodifySimpleCrudBundle:CRUD:form.html.twig' %}
+
+{% block head_script %}
+    {{ parent() }}
+    {%- javascripts
+        '@KodifyAdminBundle/Resources/public/js/jquery-ui-1.9.2.custom.min.js'
+        '@KodifyAdminBundle/Resources/public/js/jquery.tagsinput.js'
+        '@KodifyAdminBundle/Resources/public/js/views/common.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+{% block content %}
+    {{ parent() }}
+    <script>
+        var validateTagsUrl = '{{ url('validate_tags') }}';
+        var validatePornstarsUrl = '{{ url('validate_pornstars') }}';
+
+        $(document).ready(function () {
+            $('#Clip_pornstars').tagsInput({
+                defaultText        : '',
+                autocomplete_url   : '{{ url('pornstars_autocomplete') }}',
+                allowNew           : false,
+                removeLabel        : 'Remove pornstar'
+            });
+
+            $('#Clip_tags').tagsInput({
+                defaultText        : '',
+                autocomplete_url   : '{{ url('tags_autocomplete') }}',
+                allowNew           : false,
+                removeLabel        : 'Remove tag'
+            });
+
+            $('#crud_form').submit(function(e) {
+                return form_validator(e);
+            });
+        });
+
+        function form_validator(e)
+        {
+            var hasErrors = false;
+
+            var startTime = $('#Clip_startTime').val();
+            var endTime = $('#Clip_endTime').val();
+
+            if (jQuery.trim($('#Clip_title').val()) == "") {
+                hasErrors = true;
+                $('#Clip_title').parent().addClass('div-startTime control-group error');
+            } else {
+                $('#Clip_title').parent().removeClass('div-startTime control-group error');
+            }
+
+            if (startTime == "") {
+                hasErrors = true;
+                $('#Clip_startTime').parent().addClass('div-startTime control-group error');
+            }
+            if (endTime == "") {
+                hasErrors = true;
+                $('#Clip_endTime').parent().addClass('div-endTime control-group error');
+            }
+
+            if (!validateStrTimes(startTime, endTime)) {
+                hasErrors = true;
+
+                $('#Clip_startTime').parent().addClass('div-startTime control-group error');
+                $('#Clip_endTime').parent().addClass('div-endTime control-group error');
+            } else {
+                $('#Clip_startTime').parent().removeClass('div-startTime control-group error');
+                $('#Clip_endTime').parent().removeClass('div-startTime control-group error');
+            }
+
+            $('#Clip_pornstars').parent().find(".text-error").remove()
+            $('#Clip_tags').parent().find(".text-error").remove()
+
+            $('#Clip_pornstars').parent().append('<span class="text-error"></span>');
+            $('#Clip_tags').parent().append('<span class="text-error"></span>');
+
+            if ($('#Clip_pornstars').val().length > 0) {
+                invalidPornstars  = validatePornstars($('#Clip_pornstars').val());
+
+
+                if (invalidPornstars.length > 0) {
+                    hasErrors = true;
+                    str = 'Invalid pornstars: ';
+                    for (var i=0; i<invalidPornstars.length; i++) {
+                        str = str + invalidPornstars[i] + ", ";
+                    }
+
+                    $('#Clip_pornstars').parent().find('.text-error').html(str);
+                }
+            }
+
+            if ($('#Clip_tags').val().length > 0) {
+                invalidTags = validateTags($('#Clip_tags').val());
+
+                if (invalidTags.length > 0) {
+                    hasErrors = true;
+                    str = 'Invalid tags: ';
+                    for (var i=0; i<invalidTags.length; i++) {
+                        str = str + invalidTags[i] + ", ";
+                    }
+
+                    $('#Clip_tags').parent().find('.text-error').html(str);
+                }
+            } else {
+                hasErrors = true;
+                $('#Clip_tags').parent().find('.text-error').html('Clip require at least 1 tag');
+            }
+
+            return !hasErrors;
+        }
+
+    </script>
+{% endblock content %}
+
