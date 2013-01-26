@@ -55,19 +55,19 @@
                                     <li><a href="{{ path('logout') }}">Logout</a></li>
                                 </ul>
                                 <ul class="nav">
-                                    <li id="main_li">
+                                    <li id="main_li"{% if app.request.attributes.get('_route') == 'main_dashboard' %} class="active"{% endif %}>
                                         <a href="{{ path('main_dashboard') }}">Home</a>
                                     </li>
-                                    <li id="video_li">
+                                    <li id="video_li"{% if app.request.attributes.get('_route') == 'get_video' %} class="active"{% endif %}>
                                         <a href="{{ path('get_video') }}">Videos</a>
                                     </li>
-                                    <li id="clip_li">
+                                    <li id="clip_li"{% if app.request.attributes.get('_route') == 'get_clip' %} class="active"{% endif %}>
                                         <a href="{{ path('get_clip') }}">Clips</a>
                                     </li>
-                                    <li id="pornstar_li">
+                                    <li id="pornstar_li"{% if app.request.attributes.get('_route') == 'get_pornstar' %} class="active"{% endif %}>
                                         <a href="{{ path('get_pornstar') }}">Pornstars</a>
                                     </li>
-                                    <li id="tag_li">
+                                    <li id="tag_li"{% if app.request.attributes.get('_route') == 'get_tag' %} class="active"{% endif %}>
                                         <a href="{{ path('get_tag') }}">Tags</a>
                                     </li>
                                 </ul>
