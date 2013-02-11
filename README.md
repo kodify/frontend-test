@@ -4,15 +4,15 @@
 
 1. Read through the provided documentation describing the feature request
 2. Fork the project to your own GitHub account and clone to your local machine
-3. Setup the project on your own environment or the provided VM using [vagrant](http://www.vagrantup.com/) (preferred option)
+3. Setup the project on your own environment OR use the provided VM using [vagrant](http://www.vagrantup.com/) (second option preferred option)
 4. Make the required changes and commit
 5. Open a pull request to https://github.com/kodify/frontend-test
 
 ## Environment
 
-You have two options in regards to environments. You can use your own development environment or you can use our virtual machine
+You have two options in regards to environments: You can use your own development environment or you can use our virtual machine
 
-### Kodify environment using vagrant
+### ( OPTION A ) Kodify environment using vagrant
 
 * To setup using provided VM you'll need to install the latest versions of the following software for your OS
     * Vagrant: http://downloads.vagrantup.com/
@@ -30,11 +30,11 @@ To login to this new VM type:
 
     vagrant ssh
 
-### Own environment
+### ( OPTION B ) Using your own environment
 
 your system needs to be compliant with symfony2 requirements: http://symfony.com/doc/2.0/reference/requirements.html
 
-* PHP needs to be a minimum version of PHP 5.3.2
+* PHP version > 5.3.2
 * Sqlite3 needs to be enabled
 * JSON needs to be enabled
 * ctype needs to be enabled
@@ -70,9 +70,12 @@ Create database and schema
 
 
 
+
+
+
 ## Access to the project
 
-you need to add next entry in your hosts file
+you need to add the next entry in your hosts file
 
     127.0.0.1       kodify.vagrant
 
