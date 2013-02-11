@@ -9,13 +9,14 @@ class development inherits development::params {
     include development::httpd
     include php_xdebug
     include phpmyadmin
+    include supervisor3
 
     class { 'timezone': timezone => 'UTC' }
 
     class { "php_prod":
         php => "php54"
     }
-
+  
     include development::tools
 
     # disable firewall, which is enabled in newer basebox
@@ -47,16 +48,24 @@ class development inherits development::params {
     service { 'crond':
         ensure    => running,
         enable    => true,
-        require   => Package['cronie'],
+        require   => Package['cronie']
+    }
+
+    exec { 'removeCrond':
+        command =>  "/bin/rm -rf /etc/cron.d",
+        before  =>  File["/etc/cron.d"]
     }
 
     # preferred symlink syntax
     file { '/etc/cron.d':
        ensure => 'link',
-       target => '/var/www/katt/app/config/cron/dev',
+       target => '/var/www/katt/current/app/config/cron/dev',
        require => [ Package["cronie"]],
        notify => Service["crond"]
     }
+
+
+
 
 }
 
