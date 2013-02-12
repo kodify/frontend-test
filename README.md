@@ -26,10 +26,16 @@ Using the terminal navigate to the directory where you cloned the project and ty
 
 This process can take anywhere between 10-30 mins depending on your internet connection (it will need to download a VM of around 445 MB)
 
-To login to this new VM type:
+To login to this new VM, if your host machine is running OSX/Linux/Unix , you can type:
 
     vagrant ssh
 
+If your host machine is under windows, you have to install any ssh client, such as putty, and login to 127.0.0.2 , port 2222, with the next credentials:
+
+    user: vagrant
+    pass: vagrant
+    
+    
 ### ( OPTION B ) Using your own environment
 
 your system needs to be compliant with symfony2 requirements: http://symfony.com/doc/2.0/reference/requirements.html
