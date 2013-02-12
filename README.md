@@ -30,7 +30,7 @@ To login to this new VM, if your host machine is running OSX/Linux/Unix , you ca
 
     vagrant ssh
 
-If your host machine is under windows, you have to install any ssh client, such as putty, and login to 127.0.0.2 , port 2222, with the next credentials:
+If your host machine is under windows, you have to install any ssh client, such as putty, and login to 127.0.0.1 , port 2222, with the next credentials:
 
     user: vagrant
     pass: vagrant
