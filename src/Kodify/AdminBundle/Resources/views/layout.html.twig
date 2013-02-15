@@ -54,7 +54,7 @@
                                     <li><a href="#" class="navbar-link">Logged in as {{ app.user.username }}</a></li>
                                     <li><a href="{{ path('logout') }}">Logout</a></li>
                                 </ul>
-                                <ul class="nav">
+                                <ul id="mainnav" class="nav">
                                     <li id="main_li">
                                         <a href="{{ path('main_dashboard') }}">Home</a>
                                     </li>
@@ -71,6 +71,17 @@
                                         <a href="{{ path('get_tag') }}">Tags</a>
                                     </li>
                                 </ul>
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $('#mainnav').find('li a').each(function(){
+                                            var currentSplit = window.location.pathname.split('/');
+                                            var menuSplit = $(this).attr('href').split('/');
+                                            if(menuSplit[1] == currentSplit[1]) {
+                                                $(this).parent().addClass('current');
+                                            }
+                                        });
+                                    });
+                                </script>
                             </div><!--/.nav-collapse -->
                         </div>
                     </div>
